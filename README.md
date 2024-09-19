@@ -47,7 +47,7 @@ ABC Corporation souhaite développer une application Frontend dynamique en utili
 
 ### 1. Déploiement sur Vercel
 
-   Lien de deploiement: 
+   Lien de deploiemen: 
 
 
 ## Auteur

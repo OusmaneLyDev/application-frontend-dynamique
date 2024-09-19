@@ -2,12 +2,16 @@
   <div class="container mt-4">
     <h1 class="mb-4 title text-center">List of orders</h1>
     <div class="d-flex justify-content-end mb-3">
-      <!-- <button class="btn btn-primary" @click="openModal">
-        <font-awesome-icon :icon="['fas', 'plus']" />
-        Add New Order
-      </button> -->
 
-      <router-link to="/AddOrder">Add New Order</router-link>
+
+      <RouterLink
+            type="button"
+            class="btn btn-primary"
+            :to="{ name: 'AddOrder' }"
+          >
+          <font-awesome-icon :icon="['fas', 'plus']" />
+          Add New Order
+        </RouterLink>
     </div>
     <div class="table-responsive">
       <table class="table table-striped table-hover text-center table-transparent">
