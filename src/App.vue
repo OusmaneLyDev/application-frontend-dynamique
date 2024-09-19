@@ -1,47 +1,75 @@
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
+  <div id="app">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary py-3 shadow-sm">
+      <div class="container-fluid">
+        <div class="d-flex w-100 justify-content-start">
+          <router-link to="/" class="navbar-brand d-flex align-items-center">
+            <font-awesome-icon :icon="['fas', 'user']" class="me-2 icon-custom" />
+            <span>Customers</span>
+          </router-link>
+          <router-link to="/orders" class="navbar-brand d-flex align-items-center">
+            <font-awesome-icon :icon="['fas', 'shopping-cart']" class="me-2 icon-custom" />
+            <span>Orders</span>
+          </router-link>
+          <router-link to="/products" class="navbar-brand d-flex align-items-center">
+            <font-awesome-icon :icon="['fas', 'box-open']" class="me-2 icon-custom" />
+            <span>Products</span>
+          </router-link>
+        </div>
+      </div>
+    </nav>
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+    <!-- Page content -->
+    <div class="container mt-4">
+      <router-view />
     </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  </div>
 </template>
 
+<script setup>
+</script>
+
 <style scoped>
-header {
-  line-height: 1.5;
+/* Navbar Styling */
+.navbar {
+  background-color: #007bff; /* Primary blue color */
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+.navbar-brand {
+  color: #ffffff; 
+  font-weight: 300;
+  margin-right: 15px; 
+  padding: 0 10px;
 }
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
+.navbar-brand:last-child {
+  margin-right: 0; 
+}
+
+.navbar-brand:hover {
+  color: #d4d4d4; /* Lighter color on hover */
+}
+
+.icon-custom {
+  font-size: 18px;
+}
+
+/* Align items to the left and remove extra spacing */
+.navbar-nav {
+  margin-left: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .navbar-brand {
+    font-size: 10px;
+    margin-right: 10px; /* Smaller margin on mobile */
+    padding: 0 5px; /* Smaller padding on mobile */
   }
 
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
+  .icon-custom {
+    font-size: 15px;
   }
 }
 </style>
