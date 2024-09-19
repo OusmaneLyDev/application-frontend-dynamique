@@ -7,7 +7,6 @@ import FontAwesomeIcon from './plugins/fontawesome';
 
 const app = createApp(App);
 
-// Register FontAwesome globally
 app.component('font-awesome-icon', FontAwesomeIcon);
 
 app.use(router);

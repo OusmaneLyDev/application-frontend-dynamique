@@ -23,3 +23,25 @@ onMounted(fetchOrder);
     <router-link to="/orders" class="btn btn-secondary">Retour à la liste</router-link>
   </div>
 </template>
+
+
+<template>
+  <div>
+    <h2>Add Order Details</h2>
+    <!-- Formulaire pour ajouter les détails de la commande -->
+    <table>
+      <!-- Table avec les produits, quantité, etc. -->
+    </table>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      // Détails des produits, quantités, prix
+    };
+  }
+};
+</script>
+

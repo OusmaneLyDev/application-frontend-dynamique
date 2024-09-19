@@ -1,11 +1,11 @@
 <template>
   <div class="container mt-4">
-    <h1 class="mb-4 title text-center">Customer Management</h1>
+    <h1 class="mb-4 title text-center">List of Customers</h1>
     <div class="d-flex justify-content-between mb-3">
       <div></div> <!-- Empty div for spacing -->
       <button class="btn btn-primary" @click="openModal">
         <font-awesome-icon :icon="['fas', 'plus']" />
-        Add Customer
+        Add New Customer
       </button>
     </div>
     <div class="table-responsive">
@@ -34,7 +34,7 @@
               <button class="btn btn-warning me-2" @click="openModal(customer)">
                 <font-awesome-icon :icon="['fas', 'pen']" class="me-2 icon-custom" />
               </button>
-              <button class="btn btn-danger" @click="deleteCustomer(customer.id)">
+              <button class="btn btn-danger" @click="confirmDelete(customer.id)">
                 <font-awesome-icon :icon="['fas', 'trash']" class="me-2 icon-custom" />
               </button>
             </td>
@@ -48,7 +48,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">{{ isEditMode ? 'Edit' : 'Add' }} Customer</h5>
+            <h5 class="modal-title">{{ isEditMode ? 'Creat New Customer' : 'Add Customer' }}</h5>
             <button type="button" class="btn-close" @click="closeModal"></button>
           </div>
           <div class="modal-body">
@@ -73,8 +73,8 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" @click="closeModal">Close</button>
-            <button type="submit" class="btn btn-success" @click="handleSubmit">
-              {{ isEditMode ? 'Update' : 'Add' }}
+            <button type="submit" class="btn btn-primary" @click="handleSubmit">
+              {{ isEditMode ? 'Confirm' : 'Add' }}
             </button>
           </div>
         </div>
@@ -106,7 +106,6 @@
 
 <script setup>
 import { ref } from 'vue';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 const customers = ref([
   { id: 1, name: 'Customer 1', address: '123 Example Street', email: 'customer1@example.com', phone: '0123456789' },
@@ -161,10 +160,15 @@ const closeDetailsModal = () => {
   showDetailsModal.value = false;
 };
 
+const confirmDelete = (id) => {
+  if (confirm('Are you sure you want to delete this customer?')) {
+    deleteCustomer(id);
+  }
+};
+
 const deleteCustomer = (id) => {
   customers.value = customers.value.filter(c => c.id !== id);
 };
-
 </script>
 
 <style scoped>

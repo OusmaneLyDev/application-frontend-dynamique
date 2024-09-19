@@ -2,7 +2,7 @@
 
 ## Contexte
 
-ABC Corporation souhaite développer une application Frontend dynamique en utilisant Vue.js. Cette application permettra de réaliser des opérations CRUD (Créer, Lire, Mettre à jour, Supprimer) pour gérer les données commerciales. Le projet n'a pas de maquette ou de cahier des charges détaillé, mais une application concurrente a été fournie pour inspiration.
+ABC Corporation souhaite développer une application Frontend dynamique en utilisant Vue.js. Cette application permettra de réaliser des opérations CRUD (Créer, Lire, Mettre à jour, Supprimer) pour gérer les données commerciales. 
 
 ## Objectifs
 
@@ -45,16 +45,9 @@ ABC Corporation souhaite développer une application Frontend dynamique en utili
 
 ## Déploiement
 
-### 1. Configurer le déploiement sur Vercel
+### 1. Déploiement sur Vercel
 
-- Connectez-vous à [Vercel](https://vercel.com) et créez un nouveau projet.
-- Connectez votre dépôt GitHub à Vercel.
-- Déployez l'application en suivant les instructions fournies par Vercel.
-
-### 2. Vérifier le déploiement
-
-- Une fois le déploiement terminé, accédez à l'application via l'URL fournie par Vercel pour vérifier que tout fonctionne correctement.
-
+   Lien de deploiement: 
 
 
 ## Auteur
