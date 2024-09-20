@@ -28,8 +28,8 @@ ABC Corporation souhaite développer une application Frontend dynamique en utili
 1. **Cloner le projet**
 
    ```bash
-   git clone https://github.com/OusmaneLyDev/application-frontend-dynamique.git
-   cd application-frontend-dynamique
+   git clone https://github.com/OusmaneLyDev/commercial-management-app.git
+   cd commercial-management-app
 
 2. **Installer les dépendances**
 
