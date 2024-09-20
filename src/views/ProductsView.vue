@@ -1,6 +1,6 @@
 <template>
   <div class="container mt-4">
-    <h1 class="mb-4 title">List of Products</h1>
+    <h1 class="mb-4 title text-center">List of Products</h1>
     <div class="d-flex justify-content-end mb-3">
       <button class="btn btn-primary" @click="openModal">
         <font-awesome-icon :icon="['fas', 'plus']" />
@@ -51,7 +51,7 @@
       <div class="modal-dialog modal-md modal-dialog-centered">
         <div class="modal-content rounded-4 shadow-lg">
           <div class="modal-header bg-primary text-white">
-            <h5 class="modal-title">{{ isEditMode ? 'Creat New' : 'Add' }} Product</h5>
+            <h5 class="modal-title">{{ isEditMode ? 'Edit' : 'Add' }} Product</h5>
             <button type="button" class="btn-close" @click="closeModal"></button>
           </div>
           <div class="modal-body">
@@ -252,6 +252,9 @@ const closeDetailsModal = () => {
 
 <style>
 .title {
-  text-align: center;
+  font-family: 'Arial', sans-serif;
+  color: #333;
+  font-size: 2rem;
+  font-weight: 600;
 }
 </style>

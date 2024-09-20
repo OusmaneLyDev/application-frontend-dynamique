@@ -6,10 +6,11 @@
           <RouterLink
             type="button"
             class="btn btn-secondary mx-4"
-            :to="{ name: 'AddOrder' }"
+            :to="{ name: 'Orders' }"
           >
             Return to Order
           </RouterLink>
+          
           <button type="button" class="btn btn-primary">Submit</button>
         </div>
         <div class="col-md-6">
@@ -74,7 +75,7 @@
             </td>
             <td>
               <button @click="removeDetail(index)" class="btn btn-danger">
-                Add New Detail
+                Remove
               </button>
             </td>
           </tr>

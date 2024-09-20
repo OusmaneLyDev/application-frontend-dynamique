@@ -53,7 +53,7 @@
       <div class="modal-dialog modal-md">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">{{ isEditMode ? 'Creat New' : 'Add' }} Order</h5>
+            <h5 class="modal-title">{{ isEditMode ? 'Edit' : 'Add' }} Order</h5>
             <button type="button" class="btn-close" @click="closeModal"></button>
           </div>
           <div class="modal-body">
@@ -213,7 +213,10 @@ const removeDetail = (index) => {
 }
 
 .title {
+  font-family: 'Arial', sans-serif;
+  color: #333;
   font-size: 2rem;
+  font-weight: 600;
 }
 
 .detail-container {
