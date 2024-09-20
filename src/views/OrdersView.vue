@@ -33,14 +33,14 @@
             <td>{{ order.trackNumber }}</td>
             <td>{{ order.status }}</td>
             <td>
-              <button class="btn btn-info me-2" @click="viewOrder(order)">
-                <font-awesome-icon :icon="['fas', 'eye']" class="me-2 icon-custom" />
+              <button class="btn btn-info me-2" @click="viewProduct(product)">
+                <font-awesome-icon :icon="['fas', 'eye']" />
               </button>
-              <button class="btn btn-warning me-2" @click="openModal(order)">
-                <font-awesome-icon :icon="['fas', 'pen']" class="me-2 icon-custom" />
+              <button class="btn btn-warning me-2" @click="openModal(product)">
+                <font-awesome-icon :icon="['fas', 'pen']" />
               </button>
-              <button class="btn btn-danger" @click="deleteOrder(order.id)">
-                <font-awesome-icon :icon="['fas', 'trash']" class="me-2 icon-custom" />
+              <button class="btn btn-danger" @click="confirmDelete(product.id)">
+                <font-awesome-icon :icon="['fas', 'trash']" />
               </button>
             </td>
           </tr>

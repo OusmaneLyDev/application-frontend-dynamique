@@ -28,14 +28,14 @@
             <td>{{ customer.email }}</td>
             <td>{{ customer.phone }}</td>
             <td>
-              <button class="btn btn-info me-2" @click="viewDetails(customer)">
-                <font-awesome-icon :icon="['fas', 'eye']" class="me-2 icon-custom" />
+              <button class="btn btn-info me-2" @click="viewProduct(product)">
+                <font-awesome-icon :icon="['fas', 'eye']" />
               </button>
-              <button class="btn btn-warning me-2" @click="openModal(customer)">
-                <font-awesome-icon :icon="['fas', 'pen']" class="me-2 icon-custom" />
+              <button class="btn btn-warning me-2" @click="openModal(product)">
+                <font-awesome-icon :icon="['fas', 'pen']" />
               </button>
-              <button class="btn btn-danger" @click="confirmDelete(customer.id)">
-                <font-awesome-icon :icon="['fas', 'trash']" class="me-2 icon-custom" />
+              <button class="btn btn-danger" @click="confirmDelete(product.id)">
+                <font-awesome-icon :icon="['fas', 'trash']" />
               </button>
             </td>
           </tr>
@@ -178,6 +178,12 @@ const deleteCustomer = (id) => {
   color: #333;
   font-size: 2rem;
   font-weight: 600;
+}
+
+.icon-custom {
+  border: none;        /* Enlève le contour */
+  font-size: 1rem;     /* Réduit la taille des icônes */
+  padding: 0;          /* Enlève tout padding supplémentaire s'il y en a */
 }
 
 /* Table Styling */
