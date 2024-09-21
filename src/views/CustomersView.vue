@@ -28,13 +28,13 @@
             <td>{{ customer.email }}</td>
             <td>{{ customer.phone }}</td>
             <td>
-              <button class="btn btn-info me-2" @click="viewProduct(product)">
+              <button class="btn btn-info me-2" @click="viewDetails(customer)">
                 <font-awesome-icon :icon="['fas', 'eye']" />
               </button>
-              <button class="btn btn-warning me-2" @click="openModal(product)">
+              <button class="btn btn-warning me-2" @click="openModal(customer)">
                 <font-awesome-icon :icon="['fas', 'pen']" />
               </button>
-              <button class="btn btn-danger" @click="confirmDelete(product.id)">
+              <button class="btn btn-danger" @click="confirmDelete(customer.id)">
                 <font-awesome-icon :icon="['fas', 'trash']" />
               </button>
             </td>
@@ -107,6 +107,7 @@
 <script setup>
 import { ref } from 'vue';
 
+// Sample data for customers
 const customers = ref([
   { id: 1, name: 'Customer 1', address: '123 Example Street', email: 'customer1@example.com', phone: '0123456789' },
   { id: 2, name: 'Customer 2', address: '456 Example Avenue', email: 'customer2@example.com', phone: '0987654321' },
@@ -117,55 +118,65 @@ const customers = ref([
   { id: 7, name: 'Customer 7', address: '543 Elm Street', email: 'customer7@example.com', phone: '5678901234' }
 ]);
 
+// Modal and form control
 const showModal = ref(false);
 const showDetailsModal = ref(false);
 const isEditMode = ref(false);
 const formData = ref({ name: '', address: '', email: '', phone: '' });
 const selectedCustomer = ref(null);
 
+// Open modal (for add/edit)
 const openModal = (customer = null) => {
-  isEditMode.value = !!customer;
+  isEditMode.value = !!customer;  // Set edit mode if a customer is passed
   showModal.value = true;
   if (customer) {
-    formData.value = { ...customer };
+    formData.value = { ...customer };  // Pre-fill form for editing
     selectedCustomer.value = customer;
   } else {
-    formData.value = { name: '', address: '', email: '', phone: '' };
+    formData.value = { name: '', address: '', email: '', phone: '' };  // Clear form for new customer
   }
 };
 
+// Handle form submission (for add/edit)
 const handleSubmit = () => {
   if (isEditMode.value) {
+    // Update existing customer
     const index = customers.value.findIndex(c => c.id === selectedCustomer.value.id);
     if (index !== -1) {
       customers.value[index] = { id: selectedCustomer.value.id, ...formData.value };
     }
   } else {
+    // Add new customer
     const newCustomerId = customers.value.length + 1;
     customers.value.push({ id: newCustomerId, ...formData.value });
   }
   closeModal();
 };
 
+// Close modal
 const closeModal = () => {
   showModal.value = false;
 };
 
+// View customer details
 const viewDetails = (customer) => {
   selectedCustomer.value = customer;
   showDetailsModal.value = true;
 };
 
+// Close details modal
 const closeDetailsModal = () => {
   showDetailsModal.value = false;
 };
 
+// Confirm before deleting customer
 const confirmDelete = (id) => {
   if (confirm('Are you sure you want to delete this customer?')) {
     deleteCustomer(id);
   }
 };
 
+// Delete customer
 const deleteCustomer = (id) => {
   customers.value = customers.value.filter(c => c.id !== id);
 };
@@ -178,12 +189,6 @@ const deleteCustomer = (id) => {
   color: #333;
   font-size: 2rem;
   font-weight: 600;
-}
-
-.icon-custom {
-  border: none;        /* Enlève le contour */
-  font-size: 1rem;     /* Réduit la taille des icônes */
-  padding: 0;          /* Enlève tout padding supplémentaire s'il y en a */
 }
 
 /* Table Styling */
@@ -222,12 +227,6 @@ const deleteCustomer = (id) => {
 }
 
 .modal-body p {
-  font-size: 1rem;
-  line-height: 1.5;
-}
-
-.table th, .table td {
-  font-family: 'Arial', sans-serif;
-  font-size: 1rem;
+  margin-bottom: 0.5rem;
 }
 </style>
