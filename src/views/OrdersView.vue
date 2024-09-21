@@ -1,18 +1,17 @@
 <template>
   <div class="container mt-4">
-    <h1 class="mb-4 title text-center">List of orders</h1>
+    <h1 class="mb-4 title text-center">List of Orders</h1>
     <div class="d-flex justify-content-end mb-3">
-
-
       <RouterLink
-            type="button"
-            class="btn btn-primary"
-            :to="{ name: 'AddOrder' }"
-          >
-          <font-awesome-icon :icon="['fas', 'plus']" />
-          Add New Order
-        </RouterLink>
+        type="button"
+        class="btn btn-primary"
+        :to="{ name: 'AddOrder' }"
+      >
+        <font-awesome-icon :icon="['fas', 'plus']" />
+        Add New Order
+      </RouterLink>
     </div>
+
     <div class="table-responsive">
       <table class="table table-striped table-hover text-center table-transparent">
         <thead class="table-dark">
@@ -33,13 +32,13 @@
             <td>{{ order.trackNumber }}</td>
             <td>{{ order.status }}</td>
             <td>
-              <button class="btn btn-info me-2" @click="viewProduct(product)">
+              <button class="btn btn-info me-2" @click="viewOrder(order)">
                 <font-awesome-icon :icon="['fas', 'eye']" />
               </button>
-              <button class="btn btn-warning me-2" @click="openModal(product)">
+              <button class="btn btn-warning me-2" @click="openModal(order)">
                 <font-awesome-icon :icon="['fas', 'pen']" />
               </button>
-              <button class="btn btn-danger" @click="confirmDelete(product.id)">
+              <button class="btn btn-danger" @click="confirmDelete(order.id)">
                 <font-awesome-icon :icon="['fas', 'trash']" />
               </button>
             </td>
@@ -48,7 +47,7 @@
       </table>
     </div>
 
-    <!-- Modal for adding/editing -->
+    <!-- Modal for adding/editing order -->
     <div v-if="showModal" class="modal d-block" tabindex="-1" style="background-color: rgba(0, 0, 0, 0.5);">
       <div class="modal-dialog modal-md">
         <div class="modal-content">
@@ -88,11 +87,40 @@
               <!-- Order Details Section -->
               <div class="mb-3">
                 <label class="form-label">Order Details</label>
-                <div v-for="(detail, index) in formData.details" :key="index" class="detail-container d-flex mb-2 align-items-center">
-                  <input type="text" class="form-control me-2 flex-fill" v-model="detail.product" placeholder="Product" required />
-                  <input type="number" class="form-control me-2 flex-fill" v-model.number="detail.quantity" placeholder="Quantity" min="1" required />
-                  <input type="number" class="form-control me-2 flex-fill" v-model.number="detail.price" placeholder="Price" min="0" step="0.01" required />
-                  <button type="button" class="btn btn-danger" @click="removeDetail(index)">
+                <div
+                  v-for="(detail, index) in formData.details"
+                  :key="index"
+                  class="detail-container d-flex mb-2 align-items-center"
+                >
+                  <input
+                    type="text"
+                    class="form-control me-2 flex-fill"
+                    v-model="detail.product"
+                    placeholder="Product"
+                    required
+                  />
+                  <input
+                    type="number"
+                    class="form-control me-2 flex-fill"
+                    v-model.number="detail.quantity"
+                    placeholder="Quantity"
+                    min="1"
+                    required
+                  />
+                  <input
+                    type="number"
+                    class="form-control me-2 flex-fill"
+                    v-model.number="detail.price"
+                    placeholder="Price"
+                    min="0"
+                    step="0.01"
+                    required
+                  />
+                  <button
+                    type="button"
+                    class="btn btn-danger"
+                    @click="removeDetail(index)"
+                  >
                     <font-awesome-icon :icon="['fas', 'trash']" />
                   </button>
                 </div>
@@ -110,7 +138,7 @@
       </div>
     </div>
 
-    <!-- Alert Modal -->
+    <!-- Alert Modal for viewing order details -->
     <div v-if="showAlert" class="modal d-block" tabindex="-1" style="background-color: rgba(0, 0, 0, 0.5);">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -145,15 +173,37 @@ import { ref } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 const orders = ref([
-  { id: 1, date: '2024-09-01', customer: 'Customer 1', deliveryAddress: '123 Example St', trackNumber: 'TR12345', status: 'Pending', details: [{ product: 'Product A', quantity: 2, price: 19.99 }] },
-  { id: 2, date: '2024-09-02', customer: 'Customer 2', deliveryAddress: '456 Example Ave', trackNumber: 'TR67890', status: 'Shipped', details: [{ product: 'Product B', quantity: 1, price: 29.99 }] },
-  // Add more sample orders with details if needed
+  {
+    id: 1,
+    date: '2024-09-01',
+    customer: 'Customer 1',
+    deliveryAddress: '123 Example St',
+    trackNumber: 'TR12345',
+    status: 'Pending',
+    details: [{ product: 'Product A', quantity: 2, price: 19.99 }]
+  },
+  {
+    id: 2,
+    date: '2024-09-02',
+    customer: 'Customer 2',
+    deliveryAddress: '456 Example Ave',
+    trackNumber: 'TR67890',
+    status: 'Shipped',
+    details: [{ product: 'Product B', quantity: 1, price: 29.99 }]
+  }
 ]);
 
 const showModal = ref(false);
 const showAlert = ref(false);
 const isEditMode = ref(false);
-const formData = ref({ date: '', customer: '', deliveryAddress: '', trackNumber: '', status: '', details: [] });
+const formData = ref({
+  date: '',
+  customer: '',
+  deliveryAddress: '',
+  trackNumber: '',
+  status: '',
+  details: []
+});
 const selectedOrder = ref(null);
 
 const openModal = (order = null) => {
@@ -162,7 +212,14 @@ const openModal = (order = null) => {
   if (order) {
     formData.value = { ...order };
   } else {
-    formData.value = { date: '', customer: '', deliveryAddress: '', trackNumber: '', status: '', details: [] };
+    formData.value = {
+      date: '',
+      customer: '',
+      deliveryAddress: '',
+      trackNumber: '',
+      status: '',
+      details: []
+    };
   }
 };
 
@@ -171,14 +228,14 @@ const handleSubmit = () => {
     const index = orders.value.findIndex(o => o.id === formData.value.id);
     if (index !== -1) orders.value[index] = { ...formData.value };
   } else {
-    formData.value.id = Date.now(); // Unique ID for new orders
+    formData.value.id = Date.now(); // For simplicity, using current timestamp as ID
     orders.value.push({ ...formData.value });
   }
   closeModal();
 };
 
-const deleteOrder = (id) => {
-  orders.value = orders.value.filter(order => order.id !== id);
+const closeModal = () => {
+  showModal.value = false;
 };
 
 const viewOrder = (order) => {
@@ -186,12 +243,15 @@ const viewOrder = (order) => {
   showAlert.value = true;
 };
 
-const closeModal = () => {
-  showModal.value = false;
-};
-
 const closeAlert = () => {
   showAlert.value = false;
+};
+
+const confirmDelete = (id) => {
+  const confirmed = confirm('Are you sure you want to delete this order?');
+  if (confirmed) {
+    orders.value = orders.value.filter(order => order.id !== id);
+  }
 };
 
 const addDetail = () => {
@@ -205,27 +265,12 @@ const removeDetail = (index) => {
 
 <style scoped>
 .table-transparent {
-  background-color: transparent;
+  background-color: rgba(255, 255, 255, 0.9);
 }
 
-.icon-custom {
-  font-size: 1.25rem;
-}
-
-.title {
-  font-family: 'Arial', sans-serif;
-  color: #333;
-  font-size: 2rem;
-  font-weight: 600;
-}
-
-.detail-container {
+.modal {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-}
-
-.modal-dialog {
-  max-width: 50%; /* Adjust the modal width to be smaller */
+  justify-content: center;
 }
 </style>
