@@ -48,13 +48,13 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">{{ isEditMode ? 'Edit Customer' : 'Add Customer' }}</h5>
+            <h5 class="modal-title">{{ isEditMode ? 'Create new Customer' : 'Edit Customer' }}</h5>
             <button type="button" class="btn-close" @click="closeModal"></button>
           </div>
           <div class="modal-body">
             <form @submit.prevent="handleSubmit">
               <div class="mb-3">
-                <label for="customerName" class="form-label">Name</label>
+                <label for="customerName" class="form-label">Customer Name</label>
                 <input type="text" id="customerName" class="form-control" v-model="formData.name" required />
               </div>
               <div class="mb-3">
