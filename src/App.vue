@@ -13,20 +13,20 @@
             <span>Customers</span>
           </router-link>
           <router-link 
-            to="/orders" 
-            class="navbar-brand d-flex align-items-center"
-            exact-active-class="active-link"
-          >
-            <font-awesome-icon :icon="['fas', 'shopping-cart']" class="me-2 icon-custom" />
-            <span>Orders</span>
-          </router-link>
-          <router-link 
             to="/products" 
             class="navbar-brand d-flex align-items-center"
             exact-active-class="active-link"
           >
             <font-awesome-icon :icon="['fas', 'box-open']" class="me-2 icon-custom" />
             <span>Products</span>
+          </router-link>
+          <router-link 
+            to="/orders" 
+            class="navbar-brand d-flex align-items-center"
+            exact-active-class="active-link"
+          >
+            <font-awesome-icon :icon="['fas', 'shopping-cart']" class="me-2 icon-custom" />
+            <span>Orders</span>
           </router-link>
         </div>
       </div>

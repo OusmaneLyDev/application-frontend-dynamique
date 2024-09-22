@@ -51,7 +51,7 @@
       <div class="modal-dialog modal-md modal-dialog-centered">
         <div class="modal-content rounded-4 shadow-lg">
           <div class="modal-header bg-primary text-white">
-            <h5 class="modal-title">{{ isEditMode ? 'Edit' : 'Add' }} Product</h5>
+            <h5 class="modal-title">{{ isEditMode ? 'Create new' : 'Add' }} Product</h5>
             <button type="button" class="btn-close" @click="closeModal"></button>
           </div>
           <div class="modal-body">
