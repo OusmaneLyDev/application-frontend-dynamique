@@ -259,7 +259,11 @@ const addDetail = () => {
 };
 
 const removeDetail = (index) => {
-  formData.value.details.splice(index, 1);
+  if (formData.value.details.length > 1) {
+    formData.value.details.splice(index, 1);
+  } else {
+    alert('You cannot remove all the details. At least one detail must remain.');
+  }
 };
 </script>
 
