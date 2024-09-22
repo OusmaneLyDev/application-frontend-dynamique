@@ -229,9 +229,10 @@ const handleSubmit = () => {
   closeModal();
 };
 
-const confirmDelete = (productId) => {
-  productToDelete.value = productId;
-  openDeleteModal();
+const confirmDelete = (id) => {
+  if (confirm('Are you sure you want to delete this customer?')) {
+    deleteCustomer(id);
+  }
 };
 
 const deleteProduct = () => {
