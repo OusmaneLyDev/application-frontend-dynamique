@@ -13,8 +13,25 @@ onMounted(fetchOrders);
 </script>
 
 <template>
+  <div class="btn-right-action mt-4 mb-4 d-flex justify-content-end">
+          <RouterLink
+            type="button"
+            class="btn btn-secondary mx-4"
+            :to="{ name: 'Orders' }"
+          >
+            Return to Order
+          </RouterLink>
+          
+          <button type="button" class="btn btn-primary">Submit</button>
+        </div>
+
+        
+        <div class="col-md-6">
+          <label for="date" class="form-label">Date</label>
+          <input type="date" class="form-control" id="date" />
+        </div>
   <div>
-    <h2>Liste des commandes</h2>
+    <h2>Order List</h2>
     <table class="table">
       <thead>
         <tr>
