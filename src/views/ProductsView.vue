@@ -9,8 +9,8 @@
       </button>
     </div>
     <div class="table-responsive">
-      <table class="table table-striped table-hover text-center table-transparent">
-        <thead class="table-dark">
+      <table class="table table-striped">
+        <thead>
           <tr>
             <th>#</th>
             <th>Name</th>
@@ -34,15 +34,13 @@
             <td>{{ product.barcode }}</td>
             <td>{{ product.status }}</td>
             <td class="actions">
-              <button class="btn btn-info me-2" @click="openModal('view', product)">
-                <font-awesome-icon :icon="['fas', 'eye']" />
+              <button class="btn btn-link text-info me-2" @click="openModal('view', product)">
+                <font-awesome-icon icon="eye" class="text-info me-2" />
               </button>
-              <button class="btn btn-warning me-2" @click="openModal('edit', product)">
-                <font-awesome-icon :icon="['fas', 'pen']" />
+              <button class="btn btn-link text-warning me-2" @click="openModal('edit', product)">
+                <font-awesome-icon icon="edit" class="text-warning me-2" />
               </button>
-              <button class="btn btn-danger" @click="confirmDelete(product.id)">
-                <font-awesome-icon :icon="['fas', 'trash']" />
-              </button>
+              <font-awesome-icon icon="trash" class="text-danger cursor-pointer" @click="confirmDelete(order)" />
             </td>
           </tr>
         </tbody>
@@ -174,7 +172,7 @@ const handleSubmit = () => {
   closeModal();
 };
 
-// Confirm delete action
+// Confirm deletion
 const confirmDelete = (id) => {
   if (confirm('Are you sure you want to delete this product?')) {
     products.value = products.value.filter(product => product.id !== id);
@@ -184,16 +182,20 @@ const confirmDelete = (id) => {
 // Close modal
 const closeModal = () => {
   showModal.value = false;
-  modalType.value = '';
 };
-
 </script>
 
 <style scoped>
-.title {
-  font-size: 2rem;
-}
 .table-transparent {
-  background-color: transparent;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+.table-transparent th, .table-transparent td {
+  border: none;
+}
+.title {
+  color: #007bff;
+}
+.cursor-pointer {
+  cursor: pointer;
 }
 </style>

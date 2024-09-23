@@ -9,8 +9,8 @@
       </button>
     </div>
     <div class="table-responsive">
-      <table class="table table-striped table-hover text-center table-transparent">
-        <thead class="table-dark">
+      <table class="table table-striped">
+        <thead>
           <tr>
             <th>#</th>
             <th>Name</th>
@@ -27,16 +27,14 @@
             <td>{{ customer.address }}</td>
             <td>{{ customer.email }}</td>
             <td>{{ customer.phone }}</td>
-            <td>
-              <button class="btn btn-info me-2" @click="openModal('view', customer)">
+            <td class="actions">
+              <button class="btn btn-link text-info me-2" @click="openModal('view', customer)">
                 <font-awesome-icon :icon="['fas', 'eye']" />
               </button>
-              <button class="btn btn-warning me-2" @click="openModal('edit', customer)">
-                <font-awesome-icon :icon="['fas', 'pen']" />
+              <button class="btn btn-link text-warning me-2" @click="openModal('edit', customer)">
+                <font-awesome-icon icon="edit" class="text-warning me-2" />
               </button>
-              <button class="btn btn-danger" @click="confirmDelete(customer.id)">
-                <font-awesome-icon :icon="['fas', 'trash']" />
-              </button>
+              <font-awesome-icon icon="trash" class="text-danger cursor-pointer" @click="confirmDelete(order)" />
             </td>
           </tr>
         </tbody>

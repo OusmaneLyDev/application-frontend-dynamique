@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import CustomersView from '@/views/CustomersView.vue';
-// import OrdersView from '@/views/OrdersView.vue';
 import ProductsView from '@/views/ProductsView.vue';
 import AddOrder from '../components/orders/AddOrder.vue';
 import ViewOrder from '../components/orders/ViewOrder.vue';
@@ -17,11 +16,6 @@ const routes = [
     component: CustomersView
   },
   { path: '/orders', name: 'ListOrders', component: ListOrder },
-  // {
-  //   path: '/orders',
-  //   name: 'Orders',
-  //   component: OrdersView
-  // },
   {
     path: '/order-view/:id',
     name: 'order-view',
