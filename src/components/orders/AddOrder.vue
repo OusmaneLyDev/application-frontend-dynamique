@@ -6,7 +6,7 @@
           <RouterLink
             type="button"
             class="btn btn-secondary mx-4"
-            :to="{ name: 'Orders' }"
+            :to="{ name: 'ListOrders' }"
           >
             Return to Order
           </RouterLink>

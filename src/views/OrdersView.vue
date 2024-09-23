@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div class="container mt-4">
     <h1 class="mb-4 title text-center">List of Orders</h1>
     <div class="d-flex justify-content-end mb-3">
@@ -33,8 +33,8 @@
             <td>{{ order.status }}</td>
             <td>
               <button class="btn btn-info me-2" @click="viewOrder(order.id)">
-                <font-awesome-icon :icon="['fas', 'eye']" />
-              </button>
+               <font-awesome-icon :icon="['fas', 'eye']" />
+              </ button>
               <button class="btn btn-warning me-2" @click="editOrder(order.id)">
                 <font-awesome-icon :icon="['fas', 'pen']" />
               </button>
@@ -96,4 +96,4 @@ const confirmDelete = (id) => {
 .table-transparent {
   background-color: rgba(255, 255, 255, 0.9);
 }
-</style>
+</style> -->

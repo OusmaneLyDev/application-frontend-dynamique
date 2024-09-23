@@ -3,7 +3,7 @@
     <h1 class="mb-4 title text-center">List of Customers</h1>
     <div class="d-flex justify-content-between mb-3">
       <div></div> <!-- Empty div for spacing -->
-      <button class="btn btn-primary" @click="openModal">
+      <button class="btn btn-primary" @click="openModal('create')">
         <font-awesome-icon :icon="['fas', 'plus']" />
         Add New Customer
       </button>
@@ -28,10 +28,10 @@
             <td>{{ customer.email }}</td>
             <td>{{ customer.phone }}</td>
             <td>
-              <button class="btn btn-info me-2" @click="viewDetails(customer)">
+              <button class="btn btn-info me-2" @click="openModal('view', customer)">
                 <font-awesome-icon :icon="['fas', 'eye']" />
               </button>
-              <button class="btn btn-warning me-2" @click="openModal(customer)">
+              <button class="btn btn-warning me-2" @click="openModal('edit', customer)">
                 <font-awesome-icon :icon="['fas', 'pen']" />
               </button>
               <button class="btn btn-danger" @click="confirmDelete(customer.id)">
@@ -43,66 +43,54 @@
       </table>
     </div>
 
-    <!-- Modal for adding/editing -->
+    <!-- Modal for create/edit/view -->
     <div v-if="showModal" class="modal d-block" tabindex="-1" style="background-color: rgba(0, 0, 0, 0.5);">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">{{ isEditMode ? 'Create new Customer' : 'Edit Customer' }}</h5>
+            <h5 class="modal-title">{{ modalTitle }}</h5>
             <button type="button" class="btn-close" @click="closeModal"></button>
           </div>
           <div class="modal-body">
-            <form @submit.prevent="handleSubmit">
+            <form v-if="modalType !== 'view'" @submit.prevent="handleSubmit">
               <div class="mb-3">
                 <label for="customerName" class="form-label">Customer Name</label>
-                <input type="text" id="customerName" class="form-control" v-model="formData.name" required />
+                <input type="text" id="customerName" class="form-control" v-model="formData.name" :disabled="modalType === 'view'" required />
               </div>
               <div class="mb-3">
                 <label for="customerAddress" class="form-label">Address</label>
-                <input type="text" id="customerAddress" class="form-control" v-model="formData.address" required />
+                <input type="text" id="customerAddress" class="form-control" v-model="formData.address" :disabled="modalType === 'view'" required />
               </div>
               <div class="mb-3">
                 <label for="customerEmail" class="form-label">Email</label>
-                <input type="email" id="customerEmail" class="form-control" v-model="formData.email" required />
+                <input type="email" id="customerEmail" class="form-control" v-model="formData.email" :disabled="modalType === 'view'" required />
               </div>
               <div class="mb-3">
                 <label for="customerPhone" class="form-label">Phone</label>
-                <input type="tel" id="customerPhone" class="form-control" v-model="formData.phone" required />
+                <input type="tel" id="customerPhone" class="form-control" v-model="formData.phone" :disabled="modalType === 'view'" required />
               </div>
             </form>
+
+            <!-- Read-only view for "view" mode -->
+            <div v-if="modalType === 'view'">
+              <p><strong>Name:</strong> {{ formData.name }}</p>
+              <p><strong>Address:</strong> {{ formData.address }}</p>
+              <p><strong>Email:</strong> {{ formData.email }}</p>
+              <p><strong>Phone:</strong> {{ formData.phone }}</p>
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" @click="closeModal">Close</button>
-            <button type="submit" class="btn btn-primary" @click="handleSubmit">
-              {{ isEditMode ? 'Confirm' : 'Add' }}
+            <button v-if="modalType !== 'view'" type="submit" class="btn btn-primary" @click="handleSubmit">
+              {{ modalType === 'create' ? 'Add' : 'Confirm' }}
             </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Modal for viewing details -->
-    <div v-if="showDetailsModal" class="modal d-block" tabindex="-1" style="background-color: rgba(0, 0, 0, 0.5);">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Customer Details</h5>
-            <button type="button" class="btn-close" @click="closeDetailsModal"></button>
-          </div>
-          <div class="modal-body">
-            <p><strong>Name:</strong> {{ selectedCustomer.name }}</p>
-            <p><strong>Address:</strong> {{ selectedCustomer.address }}</p>
-            <p><strong>Email:</strong> {{ selectedCustomer.email }}</p>
-            <p><strong>Phone:</strong> {{ selectedCustomer.phone }}</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" @click="closeDetailsModal">Close</button>
           </div>
         </div>
       </div>
     </div>
   </div>
 </template>
+
 
 <script setup>
 import { ref } from 'vue';
@@ -120,35 +108,41 @@ const customers = ref([
 
 // Modal and form control
 const showModal = ref(false);
-const showDetailsModal = ref(false);
-const isEditMode = ref(false);
 const formData = ref({ name: '', address: '', email: '', phone: '' });
+const modalTitle = ref('');
+const modalType = ref(''); // To track whether it's create/edit/view
 const selectedCustomer = ref(null);
 
-// Open modal (for add/edit)
-const openModal = (customer = null) => {
-  isEditMode.value = !!customer;  // Set edit mode if a customer is passed
+// Open modal for create/edit/view
+const openModal = (type, customer = null) => {
+  modalType.value = type;
   showModal.value = true;
-  if (customer) {
-    formData.value = { ...customer };  // Pre-fill form for editing
+
+  if (type === 'create') {
+    modalTitle.value = 'Create New Customer';
+    formData.value = { name: '', address: '', email: '', phone: '' };
+  } else if (type === 'edit') {
+    modalTitle.value = 'Edit Customer';
+    formData.value = { ...customer };
     selectedCustomer.value = customer;
-  } else {
-    formData.value = { name: '', address: '', email: '', phone: '' };  // Clear form for new customer
+  } else if (type === 'view') {
+    modalTitle.value = 'View Customer';
+    formData.value = { ...customer };
   }
 };
 
-// Handle form submission (for add/edit)
+// Handle form submission for create/edit
 const handleSubmit = () => {
-  if (isEditMode.value) {
+  if (modalType.value === 'create') {
+    // Add new customer
+    const newCustomerId = customers.value.length + 1;
+    customers.value.push({ id: newCustomerId, ...formData.value });
+  } else if (modalType.value === 'edit') {
     // Update existing customer
     const index = customers.value.findIndex(c => c.id === selectedCustomer.value.id);
     if (index !== -1) {
       customers.value[index] = { id: selectedCustomer.value.id, ...formData.value };
     }
-  } else {
-    // Add new customer
-    const newCustomerId = customers.value.length + 1;
-    customers.value.push({ id: newCustomerId, ...formData.value });
   }
   closeModal();
 };
@@ -156,17 +150,6 @@ const handleSubmit = () => {
 // Close modal
 const closeModal = () => {
   showModal.value = false;
-};
-
-// View customer details
-const viewDetails = (customer) => {
-  selectedCustomer.value = customer;
-  showDetailsModal.value = true;
-};
-
-// Close details modal
-const closeDetailsModal = () => {
-  showDetailsModal.value = false;
 };
 
 // Confirm before deleting customer
@@ -181,6 +164,7 @@ const deleteCustomer = (id) => {
   customers.value = customers.value.filter(c => c.id !== id);
 };
 </script>
+
 
 <style scoped>
 /* Title Styling */
