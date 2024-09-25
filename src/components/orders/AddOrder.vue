@@ -8,7 +8,7 @@
             class="btn btn-secondary mx-4"
             :to="{ name: 'ListOrders' }"
           >
-            Return to Order
+            Orders list
           </RouterLink>
           
           <button type="button" class="btn btn-primary">Submit</button>

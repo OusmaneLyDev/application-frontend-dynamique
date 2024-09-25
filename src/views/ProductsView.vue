@@ -39,7 +39,7 @@
               <button class="btn btn-link text-warning me-2" @click="openModal('edit', product)">
                 <font-awesome-icon icon="edit" class="text-warning me-2" />
               </button>
-              <font-awesome-icon icon="trash" class="text-danger cursor-pointer" @click="confirmDelete(order)" />
+              <font-awesome-icon icon="trash" class="text-danger cursor-pointer" @click="confirmDelete(product.id)" />
             </td>
           </tr>
         </tbody>
@@ -48,7 +48,7 @@
 
     <!-- Modal for create/edit/view -->
     <div v-if="showModal" class="modal d-block" tabindex="-1" style="background-color: rgba(0, 0, 0, 0.5);">
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-lg"> <!-- Make the modal wider -->
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">{{ modalTitle }}</h5>
@@ -95,15 +95,45 @@
               </div>
             </form>
 
-            <!-- Read-only view for "view" mode -->
+            <!-- Read-only view for "view" mode with inputs -->
             <div v-if="modalType === 'view'">
-              <p><strong>Name:</strong> {{ formData.name }}</p>
-              <p><strong>Description:</strong> {{ formData.description }}</p>
-              <p><strong>Price:</strong> {{ formData.price }}</p>
-              <p><strong>Stock:</strong> {{ formData.stock }}</p>
-              <p><strong>Category:</strong> {{ formData.category }}</p>
-              <p><strong>Barcode:</strong> {{ formData.barcode }}</p>
-              <p><strong>Status:</strong> {{ formData.status }}</p>
+              <div class="row mb-3">
+                <div class="col">
+                  <label for="productName" class="form-label">Product Name</label>
+                  <input type="text" id="productName" class="form-control" v-model="formData.name" disabled />
+                </div>
+                <div class="col">
+                  <label for="productDescription" class="form-label">Description</label>
+                  <input type="text" id="productDescription" class="form-control" v-model="formData.description" disabled />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col">
+                  <label for="productPrice" class="form-label">Price</label>
+                  <input type="number" id="productPrice" class="form-control" v-model="formData.price" disabled />
+                </div>
+                <div class="col">
+                  <label for="productStock" class="form-label">Stock</label>
+                  <input type="number" id="productStock" class="form-control" v-model="formData.stock" disabled />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col">
+                  <label for="productCategory" class="form-label">Category</label>
+                  <input type="text" id="productCategory" class="form-control" v-model="formData.category" disabled />
+                </div>
+                <div class="col">
+                  <label for="productBarcode" class="form-label">Barcode</label>
+                  <input type="text" id="productBarcode" class="form-control" v-model="formData.barcode" disabled />
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="productStatus" class="form-label">Status</label>
+                <select id="productStatus" class="form-select" v-model="formData.status" disabled>
+                  <option value="active">Active</option>
+                  <option value="inactive">Inactive</option>
+                </select>
+              </div>
             </div>
           </div>
           <div class="modal-footer">
@@ -134,66 +164,58 @@ const products = ref([
 const showModal = ref(false);
 const formData = ref({ name: '', description: '', price: '', stock: '', category: '', barcode: '', status: 'active' });
 const modalTitle = ref('');
-const modalType = ref(''); // To track whether it's create/edit/view
-const selectedProduct = ref(null);
+const modalType = ref(''); // To track whether it's create/edit/view mode
 
-// Open modal for create/edit/view
+// Function to open modal
 const openModal = (type, product = null) => {
   modalType.value = type;
-  showModal.value = true;
+  modalTitle.value = type === 'create' ? 'Add New Product' : type === 'edit' ? 'Edit Product' : 'Product Details';
 
-  if (type === 'create') {
-    modalTitle.value = 'Create New Product';
+  if (product) {
+    formData.value = { ...product };
+  } else {
+    // Reset form data for create modal
     formData.value = { name: '', description: '', price: '', stock: '', category: '', barcode: '', status: 'active' };
-  } else if (type === 'edit') {
-    modalTitle.value = 'Edit Product';
-    formData.value = { ...product };
-    selectedProduct.value = product;
-  } else if (type === 'view') {
-    modalTitle.value = 'View Product';
-    formData.value = { ...product };
   }
+  showModal.value = true;
 };
 
-// Handle form submission for create/edit
+// Function to close modal
+const closeModal = () => {
+  showModal.value = false;
+};
+
+// Handle form submission
 const handleSubmit = () => {
   if (modalType.value === 'create') {
-    // Add new product
-    const newProductId = products.value.length + 1;
-    products.value.push({ id: newProductId, ...formData.value });
+    // Add new product (for simplicity, id is auto-incremented here)
+    const newId = products.value.length + 1;
+    products.value.push({ ...formData.value, id: newId });
   } else if (modalType.value === 'edit') {
     // Update existing product
-    const index = products.value.findIndex(p => p.id === selectedProduct.value.id);
+    const index = products.value.findIndex(p => p.id === formData.value.id);
     if (index !== -1) {
-      products.value[index] = { id: selectedProduct.value.id, ...formData.value };
+      products.value[index] = { ...formData.value };
     }
   }
   closeModal();
 };
 
-// Confirm deletion
+// Function to confirm and delete a product
 const confirmDelete = (id) => {
   if (confirm('Are you sure you want to delete this product?')) {
     products.value = products.value.filter(product => product.id !== id);
   }
 };
-
-// Close modal
-const closeModal = () => {
-  showModal.value = false;
-};
 </script>
 
 <style scoped>
-.table-transparent {
-  background-color: rgba(255, 255, 255, 0.8);
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.table-transparent th, .table-transparent td {
-  border: none;
-}
-.title {
-  color: #007bff;
-}
+
 .cursor-pointer {
   cursor: pointer;
 }

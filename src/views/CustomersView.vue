@@ -72,19 +72,21 @@
             <div v-if="modalType === 'view'">
               <div class="mb-3">
                 <label class="form-label"><strong>Name</strong></label>
-                <p class="form-control-plaintext">{{ formData.name }}</p>
+                <input type="text" id="customerName" class="form-control" v-model="formData.name" :disabled="modalType === 'view'" required />
+
               </div>
               <div class="mb-3">
                 <label class="form-label"><strong>Address</strong></label>
-                <p class="form-control-plaintext">{{ formData.address }}</p>
+                <textarea id="customerAddress" class="form-control" v-model="formData.address" :disabled="modalType === 'view'" required></textarea>
+
               </div>
               <div class="mb-3">
                 <label class="form-label"><strong>Email</strong></label>
-                <p class="form-control-plaintext">{{ formData.email }}</p>
+                <input type="email" id="customerEmail" class="form-control" v-model="formData.email" :disabled="modalType === 'view'" required />
               </div>
               <div class="mb-3">
                 <label class="form-label"><strong>Phone</strong></label>
-                <p class="form-control-plaintext">{{ formData.phone }}</p>
+                <input type="tel" id="customerPhone" class="form-control" v-model="formData.phone" :disabled="modalType === 'view'" required />
               </div>
             </div>
           </div>
