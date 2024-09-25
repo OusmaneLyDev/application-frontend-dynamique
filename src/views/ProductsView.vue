@@ -1,10 +1,9 @@
 <template>
   <div class="container mt-4">
-    <h1 class="mb-4 title text-center">List of Products</h1>
+    <h2 class="mb-4 mt-4">List of Products</h2>
     <div class="d-flex justify-content-between mb-3">
       <div></div> <!-- Empty div for spacing -->
       <button class="btn btn-primary" @click="openModal('create')">
-        <font-awesome-icon :icon="['fas', 'plus']" />
         Add New Product
       </button>
     </div>
@@ -110,7 +109,7 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" @click="closeModal">Close</button>
             <button v-if="modalType !== 'view'" type="submit" class="btn btn-primary" @click="handleSubmit">
-              {{ modalType === 'create' ? 'Add' : 'Confirm' }}
+              {{ modalType === 'create' ? 'Confirm' : 'Confirm' }}
             </button>
           </div>
         </div>

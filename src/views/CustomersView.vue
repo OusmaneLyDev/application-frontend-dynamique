@@ -1,10 +1,9 @@
 <template>
   <div class="container mt-4">
-    <h1 class="mb-4 title text-center">List of Customers</h1>
+    <h2 class="mb-4 mt-4">List of Customers</h2>
     <div class="d-flex justify-content-between mb-3">
       <div></div> <!-- Empty div for spacing -->
       <button class="btn btn-primary" @click="openModal('create')">
-        <font-awesome-icon :icon="['fas', 'plus']" />
         Add New Customer
       </button>
     </div>
@@ -34,7 +33,7 @@
               <button class="btn btn-link text-warning me-2" @click="openModal('edit', customer)">
                 <font-awesome-icon icon="edit" class="text-warning me-2" />
               </button>
-              <font-awesome-icon icon="trash" class="text-danger cursor-pointer" @click="confirmDelete(order)" />
+              <font-awesome-icon icon="trash" class="text-danger cursor-pointer" @click="confirmDelete(customer.id)" />
             </td>
           </tr>
         </tbody>
@@ -57,7 +56,7 @@
               </div>
               <div class="mb-3">
                 <label for="customerAddress" class="form-label">Address</label>
-                <input type="text" id="customerAddress" class="form-control" v-model="formData.address" :disabled="modalType === 'view'" required />
+                <textarea id="customerAddress" class="form-control" v-model="formData.address" :disabled="modalType === 'view'" required></textarea>
               </div>
               <div class="mb-3">
                 <label for="customerEmail" class="form-label">Email</label>
@@ -71,16 +70,28 @@
 
             <!-- Read-only view for "view" mode -->
             <div v-if="modalType === 'view'">
-              <p><strong>Name:</strong> {{ formData.name }}</p>
-              <p><strong>Address:</strong> {{ formData.address }}</p>
-              <p><strong>Email:</strong> {{ formData.email }}</p>
-              <p><strong>Phone:</strong> {{ formData.phone }}</p>
+              <div class="mb-3">
+                <label class="form-label"><strong>Name</strong></label>
+                <p class="form-control-plaintext">{{ formData.name }}</p>
+              </div>
+              <div class="mb-3">
+                <label class="form-label"><strong>Address</strong></label>
+                <p class="form-control-plaintext">{{ formData.address }}</p>
+              </div>
+              <div class="mb-3">
+                <label class="form-label"><strong>Email</strong></label>
+                <p class="form-control-plaintext">{{ formData.email }}</p>
+              </div>
+              <div class="mb-3">
+                <label class="form-label"><strong>Phone</strong></label>
+                <p class="form-control-plaintext">{{ formData.phone }}</p>
+              </div>
             </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" @click="closeModal">Close</button>
             <button v-if="modalType !== 'view'" type="submit" class="btn btn-primary" @click="handleSubmit">
-              {{ modalType === 'create' ? 'Add' : 'Confirm' }}
+              {{ modalType === 'create' ? 'Confirm' : 'confirm' }}
             </button>
           </div>
         </div>
@@ -88,6 +99,7 @@
     </div>
   </div>
 </template>
+
 
 
 <script setup>
@@ -165,50 +177,29 @@ const deleteCustomer = (id) => {
 
 
 <style scoped>
-/* Title Styling */
-.title {
-  font-family: 'Arial', sans-serif;
-  color: #333;
-  font-size: 2rem;
-  font-weight: 600;
-}
-
-/* Table Styling */
 .table-transparent {
-  background-color: transparent;
-  border-collapse: collapse;
+  background-color: rgba(255, 255, 255, 0.8);
 }
-
-/* Button Styling */
-.btn-primary {
-  background-color: #007bff;
-  border-color: #007bff;
-  font-size: 1rem;
-  font-weight: 500;
-}
-
-.btn-primary:hover {
-  background-color: #0056b3;
-  border-color: #004085;
-}
-
-/* Modal Custom Styling */
-.modal-dialog {
-  max-width: 600px;
-}
-
-.modal-header .btn-close {
-  background: transparent;
+.table-transparent th, .table-transparent td {
   border: none;
 }
-
-.modal-header .modal-title {
-  font-family: 'Arial', sans-serif;
-  font-weight: 600;
-  font-size: 1.25rem;
+.title {
+  color: #007bff;
+}
+.cursor-pointer {
+  cursor: pointer;
+}
+.modal-body {
+  padding: 20px;
 }
 
-.modal-body p {
-  margin-bottom: 0.5rem;
+.form-control-plaintext {
+  border: none;
+  padding-left: 0;
 }
+
+textarea[disabled] {
+  resize: none;
+}
+
 </style>
